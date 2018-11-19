@@ -1,11 +1,11 @@
-__
+
 layout: archive
 permalink: /projects/
 title: "Machine Learning and Data Science Research"
 author_profile: true
 header:
 	image: "/images/mountain.jpg"
-__
+
 
 
 {% include base_path %}
