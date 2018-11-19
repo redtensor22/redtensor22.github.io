@@ -1,10 +1,13 @@
 ---
 layout: archive
+permalink: /machine-learning/
 title: "Machine Learning Posts"
 author_profile: true
 header:
   image: "/images/mountain.jpg"
 ---
+
+
 
 
 {% include base_path %}
