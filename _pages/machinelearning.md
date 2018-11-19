@@ -1,11 +1,11 @@
-
+---
 layout: archive
-permalink: /projects/
-title: "Machine Learning and Data Science Research"
+permalink: /machine-learning/
+title: "Machine Learning Posts"
 author_profile: true
 header:
-	image: "/images/mountain.jpg"
-
+  image: "/images/mountain.jpg"
+---
 
 
 {% include base_path %}
