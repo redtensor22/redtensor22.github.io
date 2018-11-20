@@ -58,8 +58,13 @@ This is still, however, linear regression, because we are still linear in the un
 
 $$X = \begin{bmatrix} 1,&x_{1},&x_{1}^2,&...&x_{1}^p\\
 1,&x_{2},&x_{2}^2,&...&x_{2}^p\\ 
-\vdots,&& &...&\vdots  \\ 
+\vdots&& &...&\vdots  \\ 
 1,&x_{1},&x_{1}^2,&...&x_{1}^p\\ \end{bmatrix}$$
+
+which means we can solve exactly as before. Finally! We're ready to start coding.
+
+# Writing a Regression Script
+For this script, I will be using python. I will be writing this function using 1 dimensional data taken from the classic [boston housing](https://archive.ics.uci.edu/ml/machine-learning-databases/housing/). An obvious extension of this program would be to include any dimensional data. However, the purpose of this was to understand the inner workings of the regression algorithm. To actually use this on a dataset inplace of a (for example) scikit learn fit would require some additional effort. Lastly, this is run as a script. To call this in different examples it would be best to use object oriented programming and create a class. Leaving it in the script format, though, makes it easier to tinker with. 
 
 
 
