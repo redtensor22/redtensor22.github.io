@@ -26,7 +26,7 @@ $$w = argmin \sum_{i=1}^{n}(y_i-\mathcal{f}(x_i))^2 $$
 
 What we are doing is summing over each data point and at each data point finding the difference between the actual truth value and the value predicted by our regression function. Minimizing this error will give us satisfactory values for the hidden variables $$w_0$$ and the slope. 
 
-The formula above holds, however can be simplified using vector notation along with linear algebra. One bit of information which will prove important during coding this will be extension of the input data by one dimension to include bias. We can write a $$D$$ dimensional data point as 
+The formula above holds, however can be simplified using vector notation along with linear algebra. One bit of information which will prove important during coding this will be extension of the input data by one dimension to include bias. We can write a $$d$$ dimensional data point as 
 
-\begin{bmatrix} 1&x_{i1}&x_{i2}&...&x_{id}\\ \end{bmatrix}
+\begin{bmatrix} 1,&x_{i1},&x_{i2},&...&x_{id}\\ \end{bmatrix}^T
 
