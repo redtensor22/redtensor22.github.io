@@ -48,5 +48,7 @@ $$ w_{LS} = (X^TX)^{-1}(X^Ty)$$
 
 Where y is now a vector, and X is a matrix of dimension $$n\times(d+1)$$. New data can then easily be found using the relation $$y_{pred} \approx x_{new}^Tw_{LS} $$
 
+This method is nice and self contained. However, there are limitations. As we can see from looking at the final (matrix) form of the solution for $$w_{LS}$$, the matrix X must be invertible. Equivalently, the matrix must be full rank. This means that all rows and or columns must be linearly independent (cannot be tranformed into one another use multiplicative constants). If we were to write this matrix in row reduced echelon form, all pivot positions would be occupied by 1's. If $$(X^TX)^{-1}$$ does not exist, then there are infinite possible solutions. To prevent this, we want $$n\ggd$$, or the number of data points to outnumber the dimensions of our data. This is a real consequence of the [curse of dimensionality](www.visiondummy.com/2014/04/curse-dimensionality-affect-classification/).
+
 
 
