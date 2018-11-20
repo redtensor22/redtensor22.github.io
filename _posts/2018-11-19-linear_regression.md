@@ -30,3 +30,23 @@ The formula above holds, however can be simplified using vector notation along w
 
 $$x^T = \begin{bmatrix} 1,&x_{i1},&x_{i2},&...&x_{id}\\ \end{bmatrix}$$
 
+Because each of these dimensions will have their own slope, we can also write a vector of $$w$$'s as 
+
+$$w = \begin{bmatrix} w_0,&w_{1},&w_{2},&...&w_{d}\\ \end{bmatrix}$$
+
+We now want to find the maximum likelyhood of the least squares function with respect to vector $$w$$. This can be done using the gradient (for n data points)
+
+$$\sum_{i}^{n}\nabla_w(y_i^2-2w^Tx_iy_i + w^Tx_ix_i^Tw) = 0$$
+
+which can be solved to give  
+
+$$ w_{LS} = (\sum_{i=1}^{n}x_ix_i^T)^{-1}(\sum_{i=1}^{n}y_ix_i)$$
+
+And easy extension of this notation is moving into matrix form. Following the exact same procedure, we can derive the result
+
+$$ w_{LS} = (X^TX)^{-1}(X^Ty)$$
+
+Where y is now a vector, and X is a matrix of dimension $$n\times(d+1)$$. New data can then easily be found using the relation $$y_{pred} \approx x_{new}^Tw_{LS} $$
+
+
+
