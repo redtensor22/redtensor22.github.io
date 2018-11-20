@@ -28,5 +28,5 @@ What we are doing is summing over each data point and at each data point finding
 
 The formula above holds, however can be simplified using vector notation along with linear algebra. One bit of information which will prove important during coding this will be extension of the input data by one dimension to include bias. We can write a $$D$$ dimensional data point as 
 
-\left[\begin{array}{ccccc} 1\\x_{i1}\\x_{i2}\\...\\x_{id}\\ )\end{array}\right]
+\begin{bmatrix} 1&x_{i1}&x_{i2}&...&x_{id}\\ \end{bmatrix}
 
