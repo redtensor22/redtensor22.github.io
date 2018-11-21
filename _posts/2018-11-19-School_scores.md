@@ -26,9 +26,9 @@ This project will attempt to recreate the results systematically while learning 
 
 The data will be read in using pandas with the following code:
 
-'''python
-    import pandas as pd
+'''
 
+    import pandas as pd
         performance_data = pd.read_csv('C:/Users/Aaron/Desktop/Python Files/academic_performance.txt', 
                                names=['Gender','Caste','Class_X','Class_XII',
                                'Int_Asses_Per','End_Sem_Per','Arrears','Marital','Town_City',
@@ -42,9 +42,9 @@ The data will be read in using pandas with the following code:
 
 From this we can see that all of our data types are of type "object", which means we will need to map this to numeric values before using the data. To do this we will write a function that maps non-numeric values to numeric ones:
 
-'''python
+'''
+    
     import numpy as np
-
     def dataframe_converter(data):
       #first will create all of the column names in a array
       column_names = data.columns.values
