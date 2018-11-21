@@ -3,7 +3,7 @@ title: "Academic Performance"
 date: 2018-11-19
 tags: [machine learning, data science, neural network]
 header:
-  image: "/images/linear_regression.jpg"
+  image: "/images/performance.jpg"
 excerpt: "Looking at what contributes to student performance"
 mathjax: "true"
 ---
@@ -82,3 +82,5 @@ As mentioned before, first we will run the complete data set through 3 algorithm
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/KNN_all_features_actual.png" alt="Prediction of the KNN algorithm using all features">
 <img src="{{ site.url }}{{ site.baseurl }}/images/KNN_all_features_predicted.png" alt="Actual pie chart of the test data set">
+
+The KNN predicted no best scores, and was slightly inaccurate at best on other categories. Hopefully the SVM will do a bit better. 
