@@ -27,45 +27,45 @@ This project will attempt to recreate the results systematically while learning 
 The data will be read in using pandas with the following code:
 
 '''python
-import pandas as pd
+    import pandas as pd
 
-performance_data = pd.read_csv('C:/Users/Aaron/Desktop/Python Files/academic_performance.txt', 
+        performance_data = pd.read_csv('C:/Users/Aaron/Desktop/Python Files/academic_performance.txt', 
                                names=['Gender','Caste','Class_X','Class_XII',
                                'Int_Asses_Per','End_Sem_Per','Arrears','Marital','Town_City',
                                'Admission','Family_Income','Family_Size','Father_Edu','Mother_Edu',
                                'Father_Occ','Mother_Occ','Friends','Study_Hours',
                                'School_Type','Language','Travel_Time','Attendence'])
 
-print(performance_data.head(1), '\n the types of data present are \n', performance_data.dtypes)
+    print(performance_data.head(1), '\n the types of data present are \n', performance_data.dtypes)
 
 '''
 
 From this we can see that all of our data types are of type "object", which means we will need to map this to numeric values before using the data. To do this we will write a function that maps non-numeric values to numeric ones:
 
 '''python
-import numpy as np
+    import numpy as np
 
-def dataframe_converter(data):
-  #first will create all of the column names in a array
-  column_names = data.columns.values
-  #now will loop over each column
-  for column in column_names:
-    value_dic = {}
-    if data[column].dtype != np.int64 and data[column].dtype != np.float64:
-      #now if a column isnt ints or floats we look into it
-      #want to find all unique values in the column
-      all_vals = data[column].values.tolist()
-      #now find all the unique values
-      uniques = set(all_vals)
-      #now a value to map to 
-      val = 0
-      for unique in uniques:
-        if unique not in value_dic:
-          value_dic[unique] = val
-          val +=1 
-      #now map unique values to data
-      data[column] = data[column].map(lambda x: value_dic.get(x))
-  return data
+    def dataframe_converter(data):
+      #first will create all of the column names in a array
+      column_names = data.columns.values
+      #now will loop over each column
+         for column in column_names:
+           value_dic = {}
+           if data[column].dtype != np.int64 and data[column].dtype != np.float64:
+            #now if a column isnt ints or floats we look into it
+            #want to find all unique values in the column
+            all_vals = data[column].values.tolist()
+            #now find all the unique values
+            uniques = set(all_vals)
+            #now a value to map to 
+            val = 0
+            for unique in uniques:
+              if unique not in value_dic:
+                value_dic[unique] = val
+                val +=1 
+          #now map unique values to data
+          data[column] = data[column].map(lambda x: value_dic.get(x))
+        return data
 
 '''
 
