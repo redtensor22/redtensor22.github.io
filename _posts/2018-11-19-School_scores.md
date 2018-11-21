@@ -3,7 +3,7 @@ title: "Academic Performance"
 date: 2018-11-19
 tags: [machine learning, data science, neural network]
 header:
-  image: "/images/performance.jpg"
+  image: "/images/Performance.jpg"
 excerpt: "Looking at what contributes to student performance"
 mathjax: "true"
 ---
