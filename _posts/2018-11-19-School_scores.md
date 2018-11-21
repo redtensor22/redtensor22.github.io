@@ -73,7 +73,7 @@ and now can take a look at the data after its passed through.
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/indian_data_converted.png" alt="Data after running through the converter function">
 
-We can see that the data types are now all int64. Perfect! We can run a quick check for missing or NaN values using 'performance_data.isnull().values.any()', but see that none are present. This is expected, as the data shown on the UCI website is complete. 
+We can see that the data types are now all int64. Perfect! We can run a quick check for missing or NaN values using '''performance_data.isnull().values.any()''', but see that none are present. This is expected, as the data shown on the UCI website is complete. 
 Also, I will drop three columns, IAP, TWP, and ESP, as they all provide some form of final assesment. The metric I will attempt to predict will be TNP. Separating into features and labels can be done using a simple df.drop command. Additionally, outliers will not be a problem since all possible values are categorical. So now we are done with data cleaning and are ready to move on.
 
 ## A Niave Approach
