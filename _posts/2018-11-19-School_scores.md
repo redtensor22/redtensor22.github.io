@@ -74,7 +74,7 @@ and now can take a look at the data after its passed through.
 <img src="{{ site.url }}{{ site.baseurl }}/images/indian_data_converted.png" alt="Data after running through the converter function">
 
 We can see that the data types are now all int64. Perfect! We can run a quick check for missing or NaN values using '''performance_data.isnull().values.any()''', but see that none are present. This is expected, as the data shown on the UCI website is complete. 
-Also, I will drop three columns, IAP, TWP, and ESP, as they all provide some form of final assesment. The metric I will attempt to predict will be TNP. Separating into features and labels can be done using a simple df.drop command. Additionally, outliers will not be a problem since all possible values are categorical. So now we are done with data cleaning and are ready to move on.
+The metric I will attempt to predict will be end of semester percentage, like the paper evaluates. Separating into features and labels can be done using a simple df.drop command. Additionally, outliers will not be a problem since all possible values are categorical. So now we are done with data cleaning and are ready to move on.
 
 ## A Niave Approach
 
@@ -84,3 +84,81 @@ As mentioned before, first we will run the complete data set through 3 algorithm
 <img src="{{ site.url }}{{ site.baseurl }}/images/KNN_all_features_predicted.png" alt="Actual pie chart of the test data set">
 
 The KNN predicted no best scores, and was slightly inaccurate at best on other categories. Hopefully the SVM will do a bit better. 
+
+Running the SVM from scikit learn, I get an accuracy of $$36.6\%$$...really bad. The chart is shown below.
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/SVM_all_features_predicted.png" alt="SVM prediction using entire featureset">
+
+It's obvious that the features need to be narrowed down. The shape of the dataframe is 131 rows and 22 columns, so the number of rows is not too much higher than the number of columns.
+
+# Dimensional Reduction
+
+## Univariate Selection
+To reduce the dimensionality of the dataset to its most important factors, I will use a couple of different forms of dimensional reduction and see which one provides the best accuracy. The first method I will use is the SelectKBest method in Python. In this method, python can use a variety of statistical tests to find the best features. In this case, I will use the $$\Chi^2$$ test. In this test, we reject or confirm a null hypothesis based on the sum of the squared errors divided by their expected value. If this sum when charted with a critical value called alpha is greater than the critical value, we can reject the null hypothesis. The code to find the new features is:
+
+    
+    from sklearn.feature_selection import SelectKBest
+    from sklearn.feature_selection import chi2
+
+    test = SelectKBest(score_func=chi2, k=9)
+    fit = test.fit(x_train, x_test)
+
+    features_reduced = fit.transform(features)
+    #print('new reduced featureset shape is', features_reduced.shape)
+
+    #now will find which ones are best
+    feature_names = list(features.columns.values)
+
+    mask = test.get_support() #booleans of the original set
+    new_names = [] #list for new best features
+
+    for bool, feature in zip(mask, feature_names):
+      if bool:
+        new_names.append(feature)
+    print('The features found to be most important are:',new_names)
+
+Using this procedure, I find that the optimal number of features is 9, and the most important features are the internal assesment percentage  IAP (part of a continuous semester evaluation), arrears ARR (whether the student had failed any papers in the past semester), LS (whether the student lived in the city or country), admission category AS (whether the student had a free or paid tuition), the educational level of the father FQ, the occupation of the father FO, the number of friends NF, the native language ME, and the attendence percentage ATD. The factors line up with the factors found by the author, however, the author found 15 important categories whereas I find the optimal number to be 9. The 9 found in my optimization are a subset of the set found in the paper. 
+
+## Decision Trees
+
+Next I will use a bagged decision tree method, ExtraTreesClassifier, to determine feature importance. In this method we will use a series of decision trees to give a importance score to each attribute. First I will unpack and apply the sorting model
+
+    from sklearn.ensemble import ExtraTreesClassifier
+    #extract the features
+    model = ExtraTreesClassifier()
+    model.fit(x_train, x_test)
+    print('for the extra trees the importance scores are', model.feature_importances_)
+
+The authors proceed by finding the 15 most important attributes, so now I will make a dictionary of the 15 most important according to the ExtraTrees model.
+
+    #create dictionary to map and rank features
+    feature_importance_dic = {}
+    values = (model.feature_importances_)
+
+    for i in range(len(feature_names)):
+
+  
+    sorted_by_value = sorted(feature_importance_dic.items(), key=lambda kv: kv[1])
+
+    print('from feature extra trees the 15 most important values are:', sorted_by_value[-15:])
+
+Next, I will compare my 15 most important features to the ones found by the author. I will do this by repeating the following code for each possible feature reduction method used by the author
+
+      my_list_trees = sorted_by_value[-15:]
+
+      #get just the string labels from 15 most important
+      my_list_trees_names = []
+      for i in range(len(my_list_trees)):
+        my_list_trees_names.append(my_list_trees[i][0])
+      my_list_trees_names = sorted(my_list_trees_names)
+
+      for i in range(len(my_list_trees_names)):
+        if my_list_trees_names[i] == correlation[i]:
+          corr_vals.append(1)
+      corr_percentage = (len(corr_vals)/len(my_list_trees_names))
+
+In the above code, I have sorted the 15 most important elements by value. The list my_list_trees includes names of features as well as their score, so next I remove the scores to leave me with a list of only the 15 most important names. Then I go about appending an empty list with an irrelevant value for each match with the author's list. Finally, I divide the length of the matches list by the total length of the original list. 
+
+After comparing accuracies, I get that the list of important attributes that I find is a $$100\%$$ match with the author's symmetrical uncertainty attribute. The sorted list of least to most important features I find is 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/my_scores_output_indian.png" alt="Least to most important attributes found using ExtraTreesClassifier">
