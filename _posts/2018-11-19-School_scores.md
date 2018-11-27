@@ -74,7 +74,7 @@ and now can take a look at the data after its passed through.
 <img src="{{ site.url }}{{ site.baseurl }}/images/indian_data_converted.png" alt="Data after running through the converter function">
 
 We can see that the data types are now all int64. Perfect! We can run a quick check for missing or NaN values using '''performance_data.isnull().values.any()''', but see that none are present. This is expected, as the data shown on the UCI website is complete. 
-The metric I will attempt to predict will be end of semester percentage, like the paper evaluates. Separating into features and labels can be done using a simple df.drop command. Additionally, outliers will not be a problem since all possible values are categorical. So now we are done with data cleaning and are ready to move on.
+The metric I will attempt to predict will be end of semester percentage, like the paper evaluates. Separating into features and labels can be done using a simple df.drop command. Additionally, outliers will not be a problem since all possible values are categorical. Data preprocessing is taken care of using the scale function from scikit learn. So now we are done with data cleaning and are ready to move on.
 
 ## A Niave Approach
 
@@ -162,3 +162,79 @@ In the above code, I have sorted the 15 most important elements by value. The li
 After comparing accuracies, I get that the list of important attributes that I find is a $$100\%$$ match with the author's symmetrical uncertainty attribute. The sorted list of least to most important features I find is 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/my_scores_output_indian.png" alt="Least to most important attributes found using ExtraTreesClassifier">
+
+# Try Optimized Features on the SVM and KNN
+
+To use the optimized parameters on the classifiers, I need to select the most useful parameters from the full dataframe. This can be done using the following code:
+
+    #need to select most important features
+    optimized_features = {}
+    feature2_names = (features2.columns.values)
+
+    for i in range(len(my_list_trees_names)):
+      for j in range(len(feature2_names)):
+        if my_list_trees_names[i]==feature2_names[j]:
+          optimized_features[my_list_trees_names[i]] = features2[feature2_names[j]]
+
+In this code, after reloading the dataframe I create an empty dictionary which will be used to store the optimized dataframe, and create a list of all possible features in feature2_names. The optimized headers are stored in my_list_trees_names. Then, looping over each optimized header value, I look for a matching header in the feature2_names set. If a match is found, that column is added to the optimized features set. 
+
+After getting the new optimized dataset, a cross validation is performed as before and then the KNN and SVM classifiers are revisited. The accuracy of the KNN actually decreases to $$\approx 57\%$$. The SVM, however, increases accuracy from $$36.6\%$$ to $$60.60\%$$. A nice increase. Accuracy achieved by the BayesNet classifier in the original paper is $$65.33\%$$. The highest accuracy achieved in the paper 
+is with the Random Forrests classifier. So lastly, to attempt to recreate the result, I will run the optimized features through this algorithm. 
+
+Putting the data through the scikit learn RandomForestClassifier is straightfoward, and gives an accuracy of $$\approx 60\%$$. The paper the data is based off of uses WEKA and does not provide optimization parameters for this project. So, in order to improve algorithm accuracy, I will attempt to hypertune parameters using RandomSearchCV. This uses a number of cross validation folds along with a number of iterations to randomly sample a grid of preset values in order to find the most accurate combination of parameters. 
+
+    for i in range(len(my_list_trees_names)):
+      for j in range(len(feature2_names)):
+        if my_list_trees_names[i]==feature2_names[j]:
+          optimized_features[my_list_trees_names[i]] = features2[feature2_names[j]]
+          # Number of trees in random forest
+    n_estimators = [int(x) for x in np.linspace(start = 300, stop = 500, num = 5)]
+    # Number of features to consider at every split
+    max_features = ['auto', 'sqrt']
+    # Maximum number of levels in tree
+    max_depth = [int(x) for x in np.linspace(10, 110, num = 5)]
+    max_depth.append(None)
+    # Minimum number of samples required to split a node
+    min_samples_split = [2, 5, 10]
+    # Minimum number of samples required at each leaf node
+    min_samples_leaf = [2, 4]
+    # Method of selecting samples for training each tree
+    bootstrap = [True]
+    
+    # Create the random grid
+    random_grid = {'n_estimators': n_estimators,
+               'max_features': max_features,
+               'max_depth': max_depth,
+               'min_samples_split': min_samples_split,
+               'min_samples_leaf': min_samples_leaf,
+               'bootstrap': bootstrap}
+    pprint(random_grid)
+
+    #Use the random grid to search for best hyperparameters
+    #First create the base model to tune
+    rf = RandomForestClassifier()
+    # Random search of parameters, using 3 fold cross validation, 
+    # search across 100 different combinations, and use all available cores
+    rf_random = RandomizedSearchCV(estimator = rf, param_distributions = random_grid, n_iter = 100, cv = 3, verbose=2, random_state=42, n_jobs = -1)
+    # Fit the random search model
+    rf_random.fit(x_train, x_test)
+
+After this tuning is complete, the optimized parameters can be used to refit the RandomForestClassifier. Once this is complete, the classifier gives an accuracy of $$73\%$$. Nice improvement! A visualization of a tree is shown below:
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/academics.png" alt="A tree from the RandomForestClassifier">
+
+In order to increase this, we could increase the number of features available, or continue hypertuning using GridSearchCV to narrow in on the higher scores. Unfortunately, my little laptop cannot perform calculations beyond the one shown above. Although the $$99\%$$ goal was not reached, a nice increase from $$50\%$$ to $$\73%$$ can be seen. A large difference is made by optimizing feature dimensions and by hypertuning the classifier. 
+
+#Data Visualization
+
+Lastly, some nice conclusions can be drawn from looking at the most important features. I will choose 4 particularly interesting features to look at: the number of study hours (sh), the number of friends in the classroom (nf), the size of their family (fs), and the medium (me) which is their native language. 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/bar_charts.png" alt="A selection of bar charts from most influential feature dimensions">
+
+We can see from the uppermost left plot that the number of hours studied had a somewhat unexpected effect; it seems that there are diminishing returns for study hours. The number of students with a small number of study hours in the top performing bracket is small as expected, but the number of top performing students with an average amount of study hours is larger than the other two groups. Perhaps this is because the students with a large number of study hours were simply cramming for exams, whereas those with an average amount paid closer attention throughout the semester and didn't need to prepare as long for the exam. 
+
+The family size plays a factor as well; within the top performing students, those with small family sizes formed the largest population. An explanation for this could be that those that came from small families had more attention paid to them individually by parents and family resources, vice a larger family where resources would have to be distributed more thinly. 
+
+Lastly, within the top performing students, those with the largest amount of friends had the largest represetation. This could be that having more friends in the classroom allowed for more idea sharing and collaborative learning efforts. 
+
+From this, we can see that encouraging group collaboration and distributed note taking could be ways to increase overall student performance in the classroom. 
