@@ -14,7 +14,7 @@ The purpose behind this project was to dig into the mathematics behind a typical
 
 # The Theory Behind Linear Regression
 
-Imagining a simple problem in which we have input data $$ x\in \mathbb{R}^1$$ and a scalar label set $$y\in\mathbb{R}^1$$, a plot might look like (data generated using $$x, y = make_regression(n_samples=100, n_features=1, noise=10)$$)
+Imagining a simple problem in which we have input data $$ x\in \mathbb{R}^1$$ and a scalar label set $$y\in\mathbb{R}^1$$, a plot might look like (data generated using x, y = make_regression(n_samples=100, n_features=1, noise=10))
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/random_data.png" alt="Randomly generated data">
 
