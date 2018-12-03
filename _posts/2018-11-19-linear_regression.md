@@ -110,13 +110,15 @@ Now I will make use of the formula $$ w_{LS} = (X^TX)^{-1}(X^Ty)$$, and calcuate
     X_tX = X_t@X
     w_ls = (np.linalg.inv(X_tX))@(X_t@np.transpose(labels_in))
 
-After calculating the optimized least squares, I will look at a scatter plot of the actual features and labels overlaid with the predicted points from the regression, and calculate the mean square error of the prediction. 
+After calculating the optimized least squares, I will look at a scatter plot of the actual features and labels overlaid with the predicted points from the regression, and calculate the mean square error of the prediction.
+{% highlight python %} 
 
     plt.scatter(features_in,labels_in)
     plt.plot(np.transpose(features_in),X@w_ls,linestyle = '',marker='o',color='r',zorder=1)
 
     #find MSE
     print('the mean squared error of my model is',(np.mean((labels_in)-X@w_ls)**2))
+{% endhighlight %}
 
 The plot is shown below: 
 
