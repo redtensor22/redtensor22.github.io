@@ -1,7 +1,7 @@
 ---
 title: "project"
 date: 2018-11-19
-tags: [machine learning, data science, neural network]
+tags: [neural network]
 header:
   image: "/images/face_photo.jpg"
 excerpt: "machine learning"

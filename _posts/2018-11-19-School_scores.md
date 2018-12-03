@@ -1,7 +1,7 @@
 ---
 title: "Academic Performance"
 date: 2018-11-19
-tags: [machine learning, data science, random forest]
+tags: [random forest]
 header:
   image: "/images/Performance.jpg"
 excerpt: "Looking at what contributes to student performance"

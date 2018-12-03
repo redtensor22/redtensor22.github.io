@@ -1,7 +1,7 @@
 ---
 title: "Regression from Scratch"
 date: 2018-11-19
-tags: [machine learning, data science, linear regression]
+tags: [linear regression]
 header:
   image: "/images/linear_regression.jpg"
 excerpt: "A Look Into the Mathematics and Code Behind Regression"
