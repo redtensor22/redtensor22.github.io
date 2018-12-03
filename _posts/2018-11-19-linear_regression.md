@@ -123,6 +123,7 @@ The plot is shown below:
 <img src="{{ site.url }}{{ site.baseurl }}/images/crime_medv.png" alt="Plot of from scratch regression on Boston Housing dataset">
 
 Th mean square error given is $$357.939$$. Now, the next thing to do is compare this with the scikit learn regression function. This can be done using the following code
+{% highlight python %}
 
     plt.scatter(features_in,labels_in)
     boston_dataframe = pd.DataFrame(boston_data)
@@ -143,6 +144,7 @@ Th mean square error given is $$357.939$$. Now, the next thing to do is compare 
     plt.figure(3)
     plt.scatter(features_in,labels_in)
     plt.plot(y_train,p_pred,linestyle='',marker='o',color='r')
+{% endhighlight %}
 
 In which $$makepipline$$ has been used to get a second degree polynomial fit, the same polynomial order used in the homemade fit. The scatterplot is shown below: 
 
@@ -150,8 +152,6 @@ In which $$makepipline$$ has been used to get a second degree polynomial fit, th
 
 And the mean square error of this comes out to be $$537.84$$, pretty close to the homemade prediction! Further refining the homemade model to take into account regularization and other factors could further improve it. 
 
-{% highlight python %}
-x = ('a', 1, False)
-{% endhighlight %}
+
 
 
