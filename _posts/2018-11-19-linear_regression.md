@@ -65,7 +65,7 @@ which means we can solve exactly as before. Finally! We're ready to start coding
 
 # Writing a Regression Script
 For this script, I will be using python. I will be writing this function using 1 dimensional data taken from the classic [boston housing](https://archive.ics.uci.edu/ml/machine-learning-databases/housing/) dataset. An obvious extension of this program would be to include data of any dimension. However, the purpose of this was to understand the inner workings of the regression algorithm. To actually use this script on a dataset inplace of a (for example) scikit learn fit would require some additional effort. Lastly, this is run as a script. To call this in different examples it would be best to use object oriented programming and create a class. Leaving it in the script format, though, makes it easier to tinker with. First I will import the necessary packages and dataset
-
+{% highlight python %} 
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -85,6 +85,7 @@ For this script, I will be using python. I will be writing this function using 1
     #input labels as a list as well
     labels_in = np.asarray([boston_data['MEDV']])
     row, cols = features_in.shape
+{% endhighlight %}
 
 Then, as discussed above, the dataset will need an extra dimension added to it of value 1. Also the polynomial degree will be included at this point. Polynomial degree can be seen in the dimensions of the $$X$$ matrix
 {% highlight python %} 
