@@ -112,7 +112,6 @@ Now I will make use of the formula $$ w_{LS} = (X^TX)^{-1}(X^Ty)$$, and calcuate
 
 After calculating the optimized least squares, I will look at a scatter plot of the actual features and labels overlaid with the predicted points from the regression, and calculate the mean square error of the prediction.
 {% highlight python %} 
-
     plt.scatter(features_in,labels_in)
     plt.plot(np.transpose(features_in),X@w_ls,linestyle = '',marker='o',color='r',zorder=1)
 
