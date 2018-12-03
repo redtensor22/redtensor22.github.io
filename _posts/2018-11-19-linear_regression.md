@@ -105,10 +105,11 @@ Then, as discussed above, the dataset will need an extra dimension added to it o
             X[i,j] = features_in[0,i]**j
 
 Now I will make use of the formula $$ w_{LS} = (X^TX)^{-1}(X^Ty)$$, and calcuate the transpose of the $$X$$ matrix
-
+{% highlight python %} 
     X_t = np.transpose(X)
     X_tX = X_t@X
     w_ls = (np.linalg.inv(X_tX))@(X_t@np.transpose(labels_in))
+{% endhighlight %}
 
 After calculating the optimized least squares, I will look at a scatter plot of the actual features and labels overlaid with the predicted points from the regression, and calculate the mean square error of the prediction.
 {% highlight python %} 
