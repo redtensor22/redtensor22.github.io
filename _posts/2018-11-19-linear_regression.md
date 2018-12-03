@@ -150,7 +150,4 @@ In which $$makepipline$$ has been used to get a second degree polynomial fit, th
 
 And the mean square error of this comes out to be $$537.84$$, pretty close to the homemade prediction! Further refining the homemade model to take into account regularization and other factors could further improve it. 
 
-'''python
-    import numpy as np
-'''
 
