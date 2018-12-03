@@ -65,7 +65,7 @@ which means we can solve exactly as before. Finally! We're ready to start coding
 
 # Writing a Regression Script
 For this script, I will be using python. I will be writing this function using 1 dimensional data taken from the classic [boston housing](https://archive.ics.uci.edu/ml/machine-learning-databases/housing/) dataset. An obvious extension of this program would be to include data of any dimension. However, the purpose of this was to understand the inner workings of the regression algorithm. To actually use this script on a dataset inplace of a (for example) scikit learn fit would require some additional effort. Lastly, this is run as a script. To call this in different examples it would be best to use object oriented programming and create a class. Leaving it in the script format, though, makes it easier to tinker with. First I will import the necessary packages and dataset
-
+{% highlight python %}
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
@@ -85,9 +85,10 @@ For this script, I will be using python. I will be writing this function using 1
     #input labels as a list as well
     labels_in = np.asarray([boston_data['MEDV']])
     row, cols = features_in.shape
-
+{% endhighlight %}
 Then, as discussed above, the dataset will need an extra dimension added to it of value 1. Also the polynomial degree will be included at this point. Polynomial degree can be seen in the dimensions of the $$X$$ matrix
 
+{% highlight python %}
     #create big matrix X composed of each row as a data point, up to degree of polynomial
     #take degree of polynomial
     p=2
@@ -103,21 +104,23 @@ Then, as discussed above, the dataset will need an extra dimension added to it o
     for i in range(cols):
         for j in range(1,p+1):
             X[i,j] = features_in[0,i]**j
-
+{% endhighlight %}
 Now I will make use of the formula $$ w_{LS} = (X^TX)^{-1}(X^Ty)$$, and calcuate the transpose of the $$X$$ matrix
 
+{% highlight python %}
     X_t = np.transpose(X)
     X_tX = X_t@X
     w_ls = (np.linalg.inv(X_tX))@(X_t@np.transpose(labels_in))
-
+{% endhighlight %}{% endhighlight %}
 After calculating the optimized least squares, I will look at a scatter plot of the actual features and labels overlaid with the predicted points from the regression, and calculate the mean square error of the prediction. 
 
+{% highlight python %}
     plt.scatter(features_in,labels_in)
     plt.plot(np.transpose(features_in),X@w_ls,linestyle = '',marker='o',color='r',zorder=1)
 
     #find MSE
     print('the mean squared error of my model is',(np.mean((labels_in)-X@w_ls)**2))
-
+{% endhighlight %}
 The plot is shown below: 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/crime_medv.png" alt="Plot of from scratch regression on Boston Housing dataset">
