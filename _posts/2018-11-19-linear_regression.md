@@ -87,7 +87,7 @@ For this script, I will be using python. I will be writing this function using 1
     row, cols = features_in.shape
 
 Then, as discussed above, the dataset will need an extra dimension added to it of value 1. Also the polynomial degree will be included at this point. Polynomial degree can be seen in the dimensions of the $$X$$ matrix
-
+{% highlight python %} 
     #create big matrix X composed of each row as a data point, up to degree of polynomial
     #take degree of polynomial
     p=2
@@ -103,7 +103,7 @@ Then, as discussed above, the dataset will need an extra dimension added to it o
     for i in range(cols):
         for j in range(1,p+1):
             X[i,j] = features_in[0,i]**j
-
+{% endhighlight %}
 Now I will make use of the formula $$ w_{LS} = (X^TX)^{-1}(X^Ty)$$, and calcuate the transpose of the $$X$$ matrix
 {% highlight python %} 
     X_t = np.transpose(X)
