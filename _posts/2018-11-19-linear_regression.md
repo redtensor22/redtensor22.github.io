@@ -146,7 +146,7 @@ Th mean square error given is $$357.939$$. Now, the next thing to do is compare 
 
 In which $$makepipline$ has been used to get a second degree polynomial fit, the same polynomial order used in the homemade fit. The scatterplot is shown below: 
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/scikitlean_linfit.png.png" alt="Plot of scikit learn regression on Boston Housing dataset">
+<img src="{{ site.url }}{{ site.baseurl }}/images/scikitlean_linfit.png" alt="Plot of scikit learn regression on Boston Housing dataset">
 
 And the mean square error of this comes out to be $$537.84$$, pretty close to the homemade prediction! Further refining the homemade model to take into account regularization and other factors could further improve it. 
 
