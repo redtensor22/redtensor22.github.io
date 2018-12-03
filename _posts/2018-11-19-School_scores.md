@@ -10,15 +10,15 @@ mathjax: "true"
 
 # Project Objective
 
-The purpose behind this project was to attempt to recreate results published by Hussain S, Dahan N.A, Ba-Alwi F.M, and Ribata N. titled "Educational Data Mining and Analysis of Student's Academic Performance Using WEKA". In this paper, the authors take data compiled regarding Indian school students and attempt to determine likelyhood of success using a variety of machine learning techniques. This type of analysis can be very important in determining what factors need to be addressed to improve student performance in school systems and prevent drop outs. It also allows a window into what kind of soceital issues play a part in academic performance.
+The purpose behind this project was to attempt to recreate results published by Hussain S, Dahan N.A, Ba-Alwi F.M, and Ribata N. in a paper titled "Educational Data Mining and Analysis of Student's Academic Performance Using WEKA". In this paper, the authors take data compiled regarding Indian school students and attempt to determine likelyhood of success using a variety of machine learning techniques. This type of analysis can be very important in determining what factors need to be addressed to improve student performance in school systems and prevent drop outs. It also opens a window allowing us to see into what kind of soceital issues play a part in academic performance.
 
-In the paper the authors compare several types of algorithsm such as Neural Networks, SVM, K nearest neighbors, and Random forest. These are used in classification tasks to determine whether a student will perform well, poorly, etc. Before running these algorithms, the authors use feature selection techniques to determine which features play the largest roles in the labels. Metrics used to evaluate performance were Recall, Precision, F-scores, MSE, MAE, and accuracy. The maximum accuracy attained was 99$$\%$$. 
+In the paper the authors compare several types of algorithms such as Neural Networks, SVM, K nearest neighbors, and Random forest. These are used in classification tasks to determine whether a student will perform well, poorly, etc. Before running these algorithms, the authors use feature selection techniques to determine which features play the largest roles in the labels. Metrics used to evaluate performance were Recall, Precision, F-scores, MSE, MAE, and accuracy. The maximum accuracy attained was 99$$\%$$. 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/indian_school_attributes.png" alt="Table listing attribute qualities. Taken from Hussain S. et al.">
 
-The label in this study is ESP, end of semester percentage. The dataset used for this study is freely available at [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Student+Academics+Performance). The authors were able to narrow down the feature dimensions to 11, using a variety of feature reduction methods. 
+The label in this study is ESP, end of semester percentage. The dataset used for this study is freely available at [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Student+Academics+Performance). The authors were able to narrow down the feature dimensions to 15, using a variety of feature reduction methods. 
 
-This project will attempt to recreate the results systematically while learning about the effect of feature dimensions on outcomes. First, I will look at using all feature dimensions to predict outcome using KNN, Meanshift (for exploratoy analysis), and SVM. Then, I will narrow features to find the most important ones, and finally will compare the metric of the algorithms to determine which is most effective. 
+This project will attempt to recreate the results systematically while learning about the effect of feature dimensions on outcomes. First, I will look at using all feature dimensions to predict outcome using KNN then with SVM. Then, I will narrow features to find the most important ones, and finally will compare the accuracy of the algorithms to determine which is most effective. 
 
 # Predictions using all given features
 
@@ -94,7 +94,7 @@ It's obvious that the features need to be narrowed down. The shape of the datafr
 # Dimensional Reduction
 
 ## Univariate Selection
-To reduce the dimensionality of the dataset to its most important factors, I will use a couple of different forms of dimensional reduction and see which one provides the best accuracy. The first method I will use is the SelectKBest method in Python. In this method, python can use a variety of statistical tests to find the best features. In this case, I will use the $$\Chi^2$$ test. In this test, we reject or confirm a null hypothesis based on the sum of the squared errors divided by their expected value. If this sum when charted with a critical value called alpha is greater than the critical value, we can reject the null hypothesis. The code to find the new features is:
+To reduce the dimensionality of the dataset to its most important factors, I will use a couple of different forms of dimensional reduction and see which one provides the best accuracy. The first method I will use is the SelectKBest method in Python. In this method, python can use a variety of statistical tests to find the best features. In this case, I will use the $$\chi^2$$ test. In this test, we reject or confirm a null hypothesis based on the sum of the squared errors divided by their expected value. If this sum when charted with a critical value called alpha is greater than the critical value, we can reject the null hypothesis. The code to find the new features is:
 
     
     from sklearn.feature_selection import SelectKBest
@@ -159,7 +159,7 @@ Next, I will compare my 15 most important features to the ones found by the auth
 
 In the above code, I have sorted the 15 most important elements by value. The list my_list_trees includes names of features as well as their score, so next I remove the scores to leave me with a list of only the 15 most important names. Then I go about appending an empty list with an irrelevant value for each match with the author's list. Finally, I divide the length of the matches list by the total length of the original list. 
 
-After comparing accuracies, I get that the list of important attributes that I find is a $$100\%$$ match with the author's symmetrical uncertainty attribute. The sorted list of least to most important features I find is 
+After comparing accuracies, I get that the list of important attributes that I find is a $$100\%$$ match with the author's symmetrical uncertainty attribute selection method. The sorted list of least to most important features I find is 
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/my_scores_output_indian.png" alt="Least to most important attributes found using ExtraTreesClassifier">
 
@@ -223,7 +223,7 @@ After this tuning is complete, the optimized parameters can be used to refit the
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/academics.png" alt="A tree from the RandomForestClassifier">
 
-In order to increase this, we could increase the number of features available, or continue hypertuning using GridSearchCV to narrow in on the higher scores. Unfortunately, my little laptop cannot perform calculations beyond the one shown above. Although the $$99\%$$ goal was not reached, a nice increase from $$50\%$$ to $$\73%$$ can be seen. A large difference is made by optimizing feature dimensions and by hypertuning the classifier. 
+In order to increase this, we could increase the number of features available, or continue hypertuning using GridSearchCV to narrow in on the higher scores. Unfortunately, my little laptop cannot perform calculations beyond the one shown above. Although the $$99\%$$ goal was not reached, a nice increase from $$50\%$$ to $$73\%$$ can be seen. A large difference is made by optimizing feature dimensions and by hypertuning the classifier. 
 
 #Data Visualization
 
