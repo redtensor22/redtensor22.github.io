@@ -225,7 +225,7 @@ After this tuning is complete, the optimized parameters can be used to refit the
 
 In order to increase this, we could increase the number of features available, or continue hypertuning using GridSearchCV to narrow in on the higher scores. Unfortunately, my little laptop cannot perform calculations beyond the one shown above. Although the $$99\%$$ goal was not reached, a nice increase from $$50\%$$ to $$73\%$$ can be seen. A large difference is made by optimizing feature dimensions and by hypertuning the classifier. 
 
-#Data Visualization
+# Data Visualization
 
 Lastly, some nice conclusions can be drawn from looking at the most important features. I will choose 4 particularly interesting features to look at: the number of study hours (sh), the number of friends in the classroom (nf), the size of their family (fs), and the medium (me) which is their native language. 
 
