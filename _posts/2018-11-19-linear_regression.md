@@ -64,8 +64,89 @@ $$X = \begin{bmatrix} 1,&x_{1},&x_{1}^2,&...&x_{1}^p\\
 which means we can solve exactly as before. Finally! We're ready to start coding.
 
 # Writing a Regression Script
-For this script, I will be using python. I will be writing this function using 1 dimensional data taken from the classic [boston housing](https://archive.ics.uci.edu/ml/machine-learning-databases/housing/) dataset. An obvious extension of this program would be to include any dimensional data. However, the purpose of this was to understand the inner workings of the regression algorithm. To actually use this on a dataset inplace of a (for example) scikit learn fit would require some additional effort. Lastly, this is run as a script. To call this in different examples it would be best to use object oriented programming and create a class. Leaving it in the script format, though, makes it easier to tinker with. 
+For this script, I will be using python. I will be writing this function using 1 dimensional data taken from the classic [boston housing](https://archive.ics.uci.edu/ml/machine-learning-databases/housing/) dataset. An obvious extension of this program would be to include any dimensional data. However, the purpose of this was to understand the inner workings of the regression algorithm. To actually use this on a dataset inplace of a (for example) scikit learn fit would require some additional effort. Lastly, this is run as a script. To call this in different examples it would be best to use object oriented programming and create a class. Leaving it in the script format, though, makes it easier to tinker with. First I will import the necessary packages and dataset
+
+    import numpy as np
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    from sklearn.linear_model import LinearRegression 
+    from sklearn.model_selection import train_test_split 
+    from sklearn.preprocessing import PolynomialFeatures
+    from sklearn.pipeline import make_pipeline
 
 
+    #get some test 1D data
+    file_path = 'C:/Users/Aaron/Documents/boston_data.xlsx'
+    boston_data = pd.read_excel(file_path)
 
+
+    #input data as a list, already gives x_n
+    features_in = np.asarray([boston_data['CRIM']])
+    #input labels as a list as well
+    labels_in = np.asarray([boston_data['MEDV']])
+    row, cols = features_in.shape
+
+Then, as discussed above, the dataset will need an extra dimension added to it of value 1. Also the polynomial degree will be included at this point. Polynomial degree can be seen in the dimensions of the $$X$$ matrix
+
+    #create big matrix X composed of each row as a data point, up to degree of polynomial
+    #take degree of polynomial
+    p=2
+    #want to add a dimension to x of 1 to p to account for offest
+    X = np.zeros(shape = (cols,(p+1)))
+
+    #first add one to the first column of X
+    for i in range(cols):
+    X[i,0] = 1
+
+    k=0
+
+    for i in range(cols):
+        for j in range(1,p+1):
+            X[i,j] = features_in[0,i]**j
+
+Now I will make use of the formula $$ w_{LS} = (X^TX)^{-1}(X^Ty)$$, and calcuate the transpose of the $$X$$ matrix
+
+    X_t = np.transpose(X)
+    X_tX = X_t@X
+    w_ls = (np.linalg.inv(X_tX))@(X_t@np.transpose(labels_in))
+
+Now, after calculating the optimized least squares, I will look at a scatter plot of the actual features and labels overlaid with the predicted points from the regression, and calculate the mean square error of the prediction. 
+
+    plt.scatter(features_in,labels_in)
+    plt.plot(np.transpose(features_in),X@w_ls,linestyle = '',marker='o',color='r',zorder=1)
+
+    #find MSE
+    print('the mean squared error of my model is',(np.mean((labels_in)-X@w_ls)**2))
+
+The plot is shown below: 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/crime_medv.png" alt="Plot of from scratch regression on Boston Housing dataset">
+
+Th mean square error given is $$357.939$$. Now, the next thing to do is compare this with the scikit learn regression function. This can be done using the following code
+
+    plt.scatter(features_in,labels_in)
+    boston_dataframe = pd.DataFrame(boston_data)
+    features_data = boston_dataframe['CRIM']
+    features_data = features_data.values.reshape(len(features_data),1)
+
+
+    labels_data = boston_dataframe['MEDV']
+    x_train, y_train, x_test, y_test = train_test_split(features_data,labels_data)
+
+    lm = LinearRegression()
+
+    #now compare this to a polynomial fit
+    p=make_pipeline(PolynomialFeatures(3),LinearRegression())
+    p.fit(x_train,x_test)
+    p_pred = p.predict(y_train)
+
+    plt.figure(3)
+    plt.scatter(features_in,labels_in)
+    plt.plot(y_train,p_pred,linestyle='',marker='o',color='r')
+
+In which $$makepipline$ has been used to get a second degree polynomial fit, the same polynomial order used in the homemade fit. The scatterplot is shown below: 
+
+<img src="{{ site.url }}{{ site.baseurl }}/images/scikitlean_linfit.png.png" alt="Plot of scikit learn regression on Boston Housing dataset">
+
+And the mean square error of this comes out to be $$537.84$$, pretty close to the homemade prediction! Further refining the homemade model to take into account regularization and other factors could further improve it. 
 
