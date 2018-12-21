@@ -127,6 +127,8 @@ ax2.set_xlabel('HNR')
 plt.tight_layout()
 {% endhighlight %}
 
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/histogram_PPE.png" alt="Hisogram of several feature dimensions with hotter colors indicative of higher frequency.">
+
 Lastly, we can look for missing values with a simple code:
 
 {% highlight python %}
