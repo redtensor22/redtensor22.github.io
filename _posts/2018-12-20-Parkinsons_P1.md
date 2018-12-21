@@ -22,7 +22,7 @@ Previously published results found that, using linear regression with Lasso tech
 # Data Categories and Cleaning
 
 The data can be read in with a pandas csv read command. Columns in the data are shown below
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/df_columns.png" alt="Column titles for the dataframe">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/df_columns.png" alt="Column titles for the dataframe">
 
 Column descriptions are as follows:
 
