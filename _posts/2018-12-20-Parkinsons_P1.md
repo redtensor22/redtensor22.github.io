@@ -92,7 +92,6 @@ sns.distplot( df["Jitter(%)"] , color="blue", ax=axes[0, 0])
 sns.distplot( df["Jitter:DDP"] , color="blue", ax=axes[0, 1])
 
 sns.distplot( df["Jitter:RAP"] , color="blue", ax=axes[1, 0])
-plt.xlim(0.00033,0.057540000000000001)
 
 sns.distplot( df["Jitter:PPQ5"] , color="blue", ax=axes[1, 1])
 {% endhighlight %}
@@ -112,7 +111,6 @@ cm = plt.cm.get_cmap('RdYlBu_r')
 col = (n-n.min())/(n.max()-n.min())
 for c, p in zip(col, patches):
     plt.setp(p, 'facecolor', cm(c))
-ax1.set_xlim([0.00028600000000000001, 0.44826000000000004])
 ax1.set_xlabel('NHR')
 plt.tight_layout()
 
@@ -122,7 +120,6 @@ cm = plt.cm.get_cmap('RdYlBu_r')
 col = (n-n.min())/(n.max()-n.min())
 for c, p in zip(col, patches):
     plt.setp(p, 'facecolor', cm(c))
-ax2.set_xlim([1.659, 37.875])
 ax2.set_xlabel('HNR')
 plt.tight_layout()
 {% endhighlight %}
