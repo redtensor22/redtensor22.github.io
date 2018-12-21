@@ -57,7 +57,7 @@ The next step in data cleaning is to look for outliers. This can be done using z
 
 {% highlight python %} 
 z_score = np.abs(stats.zscore(df))
-df_new=df[(z_score<3.1).all(axis=1)]
+df_new=df[(z_score<3).all(axis=1)]
 {% endhighlight %}
 
 Next, preprocessing will be used to scale the remaining data by subtracting off the mean and dividing by the standard deviation. This is done with a simple {% highlight python %} preprocessing.scale{% endhighlight %} command. We can visualize what is happening to the data during this process using box plots (shown only for select categories for visualization purposes). First the data is read in:
