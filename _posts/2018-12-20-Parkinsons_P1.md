@@ -608,7 +608,7 @@ This project could be further refined by fine tuning the ANN. The ANN parameters
 # Bibliography 
 [1]  S. K. Van Den Eeden, C. M. Tanner, A. L. Bernstein, R. D. Fross, A. Leimpeter, D. A. Bloch, and L. M. Nelson, “Incidence of Parkinson’s disease: Variation by age, gender, and race/ethnicity,” Amer. J. Epidemiol., vol. 157, pp. 1015–1022, 2003. 
 
-[2]  A. Ho, R. Iansek, C. Marigliani, J. Bradshaw, and S. Gates, “Speech impairmentinalargesampleofpatientswithParkinson’sdisease,” Behav. Neurol., vol. 11, pp. 131–37, 1998.
+[2]  A. Ho, R. Iansek, C. Marigliani, J. Bradshaw, and S. Gates, “Speech impairment in a large sample of patients with Parkinson’s disease,” Behav. Neurol., vol. 11, pp. 131–37, 1998.
 
 [3] A Tsanas, MA Little, PE McSharry, LO Ramig (2009) 'Accurate telemonitoring of Parkinson’s disease progression by non-invasive speech tests', IEEE Transactions on Biomedical Engineering
 
