@@ -598,7 +598,7 @@ One run of the NN produces a MSE of
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/MSE_NN.png" alt="MSE from a run of the ANN">
 
-Because the NN is not a simple convex optimization problem (there is not necessarily a global minima), we should average the MSE over several runs. This give an average over 10 runs as $$\approx 2.4$$. This result is a $$68\%$$ increase over previously published results. 
+Because the NN is not a simple convex optimization problem (there is not necessarily a global minima), we should average the MSE over several runs. This give an average over 10 runs as $$\approx 2.4$$. This result is a $$68\%$$ improvement over previously published results. 
 
 # Future Work
 This project could be further refined by fine tuning the ANN. The ANN parameters used here were determined via trail and error, but implementing a pruning algorithm and plot of various parameter values vs MSE could further reduce the found MSE. Additionally, a longer study would be helpful, as the long term trend of Parkinson's disease could be seen rather than the short term, somewhat inconsistent behavior, seen in several of the patients in this study. 
