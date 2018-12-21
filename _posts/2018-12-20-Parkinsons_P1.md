@@ -26,9 +26,9 @@ The data can be read in with a pandas csv read command. Columns in the data are 
 
 Column descriptions are as follows:
 
--'subject#': the number assigned to a subject
+*'subject#': the number assigned to a subject
 
--'age': the age of the corresponding subject
+*'age': the age of the corresponding subject
 
 -'sex': the sex of the subject
 
