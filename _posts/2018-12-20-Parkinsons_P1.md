@@ -112,7 +112,7 @@ Which produces
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/Shimmer.png" alt="Hisogram of the Shimmer categories.">
 
-And lastly we can look at the remaining categories, where here the highest frequencies are plotted with the hotter colors (again, code is only shown for a selection of subplots due to similarity)
+Now we can look at the remaining categories, where here the highest frequencies are plotted with the hotter colors (again, code is only shown for a selection of subplots due to similarity)
 
 {% highlight python %}
 plt.figure(5)
@@ -184,6 +184,9 @@ We can see that, as expected, the Jitter and Shimmer categories are highly corre
     axshim.figure.tight_layout()
 {% endhighlight %}
 <img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/corr_jitter.png" alt="Zoomed correlation matrix of the Jitter subcategories.">
+
+We can now see the zoomed correlation matrices for both the Jitter and Shimmer categories. The values close to 1 throughout the entire matrices indicates a high correlation between two features. 
+
 <img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/corr_shimmer.png" alt="Zoomed correlation matrix of the Shimmer subcategories.">
 
 It could be interesting to look at how time relates to total UPDRS score. In reference [3], it is stated that a more or less positive linear correlation exists between time and disease score. We can look at a bivariate distribution using Seaborn to see how the two feature dimensions 'test_time' and 'total_UPDRS' relate to each other. Darker areas in the plot indicate high correlation areas. 
