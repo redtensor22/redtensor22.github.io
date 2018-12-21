@@ -51,15 +51,15 @@ df_new=df[(z_score<3.1).all(axis=1)]
 
 Next, preprocessing will be used to scale the remaining data by subtracting off the mean and dividing by the standard deviation. This is done with a simple {% highlight python %} preprocessing.scale{% endhighlight %} command. We can visualize what is happening to the data during this process using box plots (shown only for select categories for visualization purposes). First the data is read in:
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/candle_1.png" alt="Box plot for HNR, RPDE, DFA, and PPE. Plot taken before scaling or outlier removal.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/candle_1.png" alt="Box plot for HNR, RPDE, DFA, and PPE. Plot taken before scaling or outlier removal.">
 
 Next, the data is scaled:
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/candle_2.png" alt="Box plot for HNR, RPDE, DFA, and PPE. Plot taken after scaling but before outlier removal.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/candle_2.png" alt="Box plot for HNR, RPDE, DFA, and PPE. Plot taken after scaling but before outlier removal.">
 
 Lastly, the data outliers are removed: 
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/candle_3.png" alt="Box plot for HNR, RPDE, DFA, and PPE. Plot taken after scaling and outlier removal.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/candle_3.png" alt="Box plot for HNR, RPDE, DFA, and PPE. Plot taken after scaling and outlier removal.">
 
 We can look at how this affects the corresponding distributions using the following code:
 {% highlight python %}
@@ -80,7 +80,7 @@ plt.legend(['DFA','NHR','RPDE'])
 
 Which produces the following figure:
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/dist_plot1.png" alt="A comparison of the distributions of DFA, NHR, and RPDE before and after scaling.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/dist_plot1.png" alt="A comparison of the distributions of DFA, NHR, and RPDE before and after scaling.">
 
 We can get an idea of what the distributions of the feature dimensions look like before standardization with a histogram (only a piece of the code is shown because it is similar for the other categories):
 
@@ -98,9 +98,9 @@ sns.distplot( df["Jitter:PPQ5"] , color="blue", ax=axes[1, 1])
 {% endhighlight %}
 
 Which produces
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/Jitter.png" alt="Hisogram of the Jitter categories.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/Jitter.png" alt="Hisogram of the Jitter categories.">
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/Shimmer.png" alt="Hisogram of the Shimmer categories.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/Shimmer.png" alt="Hisogram of the Shimmer categories.">
 
 And lastly we can look at the remaining categories, where here the highest frequencies are plotted with the hotter colors (again, code is only shown for a selection of subplots due to similarity)
 
@@ -153,7 +153,7 @@ After getting an idea of what the data looks like and cleaning it, the next step
 {% endhighlight %}
 
 which produces the following figure
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/corr_all.png" alt="Correlation matrix of all feature dimensions.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/corr_all.png" alt="Correlation matrix of all feature dimensions.">
 
 We can see that, as expected, the Jitter and Shimmer categories are highly correlated amongst themselves. We can zoom in on each to get a better look: 
 
@@ -173,8 +173,8 @@ We can see that, as expected, the Jitter and Shimmer categories are highly corre
             square=True,vmin=-1, vmax=1,annot=True)
     axshim.figure.tight_layout()
 {% endhighlight %}
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/corr_jitter.png" alt="Zoomed correlation matrix of the Jitter subcategories.">
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/corr_shimmer.png" alt="Zoomed correlation matrix of the Shimmer subcategories.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/corr_jitter.png" alt="Zoomed correlation matrix of the Jitter subcategories.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/corr_shimmer.png" alt="Zoomed correlation matrix of the Shimmer subcategories.">
 
 It could be interesting to look at how time relates to total UPDRS score. In reference [3], it is stated that a more or less positive linear correlation exists between time and disease score. We can look at a bivariate distribution using Seaborn to see how the two feature dimensions $$'test_time'$$ and $$'total_UPDRS'$$ relate to each other. Darker areas in the plot indicate high correlation areas. 
 
@@ -183,7 +183,7 @@ It could be interesting to look at how time relates to total UPDRS score. In ref
     ax_marg=sns.jointplot(x=df_new["test_time"], y=df_new["total_UPDRS"], kind='kde', color='b',space=0)
 {% endhighlight %}
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/marginal_plot.png" alt="Bivariate distribution of test time and total UPDRS score">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/marginal_plot.png" alt="Bivariate distribution of test time and total UPDRS score">
 
 From the above we can see that there is a lot of overlap between the two variables, and it might be worth digging further to see what kind of relationship exists. A relationship addressed here is that between gender and disease progression rate. Each of the 42 patients, both male and female, can have their respective $$'test_time'$$ vs $$'total_UPDRS'$$ plot created. Then, for each patient, we can look at a regression fit to their data. Because we will only be looking at data of dimension $$\R^2$$, we can take the coefficients of the fit and average them over each gender to get a disease progression rate for each sex. First, we will separate the men and women
 
@@ -285,11 +285,11 @@ Now we have the MSE and fit coefficients stored in a dictionary for males and fe
 
 The above code produces (only select few shown) the following plots:
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/subject_8_linfit.png" alt="Plot of the 'test_time' vs 'total_UPDRS' score for subject 8. Subject number appears at the top of the plot. Red line in overlay of the regression fit.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/subject_8_linfit.png" alt="Plot of the 'test_time' vs 'total_UPDRS' score for subject 8. Subject number appears at the top of the plot. Red line in overlay of the regression fit.">
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/subject_14_linfit.png" alt="Plot of the 'test_time' vs 'total_UPDRS' score for subject 14. Subject number appears at the top of the plot. Red line in overlay of the regression fit.Plot of the 'test_time' vs 'total_UPDRS' score for subject 8. Subject number appears at the top of the plot. Red line in overlay of the regression fit.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/subject_14_linfit.png" alt="Plot of the 'test_time' vs 'total_UPDRS' score for subject 14. Subject number appears at the top of the plot. Red line in overlay of the regression fit.Plot of the 'test_time' vs 'total_UPDRS' score for subject 8. Subject number appears at the top of the plot. Red line in overlay of the regression fit.">
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/subject_28_linfit.png" alt="Plot of the 'test_time' vs 'total_UPDRS' score for subject 28. Subject number appears at the top of the plot. Red line in overlay of the regression fit.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/subject_28_linfit.png" alt="Plot of the 'test_time' vs 'total_UPDRS' score for subject 28. Subject number appears at the top of the plot. Red line in overlay of the regression fit.">
 
 There are several things to note from the above plots. First, in each plot there are three "kinks". At the beginning, middle, and end. This is due to the previously discussed fact that UPDRS scores were hand evaluated only at the start, halfway point, and end of the study. Additional points were derived using linear interpolation. This explains the near exact fit for many of the points. 
 
@@ -334,7 +334,7 @@ Lastly in our exploratory analysis, we will look at clustering to see what group
 
 In the above code, first the PCA is fitted on the features. The PCA is called to account for $$97\%$$ of the variance, which amounts to 11 principle components. Next, the data is transformed using the PCA. The plot below shows how changing the number of PC's to keep in the analysis preserves the variance of the original data. 
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/variance_vs_components.png" alt="Plot of the variance vs the number of principle components needed to account for said variance value.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/variance_vs_components.png" alt="Plot of the variance vs the number of principle components needed to account for said variance value.">
 
 Keeping 11 components accounts for a large percentage of the variance, so more are not necessary. We can look at how each principle component counts individually using the following
 
@@ -347,7 +347,7 @@ Keeping 11 components accounts for a large percentage of the variance, so more a
 {% endhighlight %}
 
 Which produces the following plot:
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/bar_plot_PC.png" alt="Histogram of each Principle Component and the variance it accoutns for.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/bar_plot_PC.png" alt="Histogram of each Principle Component and the variance it accoutns for.">
 
 As expected from the mathematical background of PCA, the first few principle components account for a large portion of the overall variance. We can do another correlation matrix to look at how the PCA changed the components
 
@@ -359,7 +359,7 @@ As expected from the mathematical background of PCA, the first few principle com
     ax.figure.tight_layout()
 {% endhighlight %}
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/PCA_corr_map.png" alt="Correlation matrix of the PCA transformed data">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/PCA_corr_map.png" alt="Correlation matrix of the PCA transformed data">
 
 The above image clearly shows that the PCA has been effective in reducing the correlation values. There are still correlated components, but the numeric correlation values are much smaller than before. 
 
@@ -390,7 +390,7 @@ Now we can move on to the KMeans clustering evaluation. A problem with determini
 
 A common method to find the optimal value for K is to use the "elbow" method. This method plots the inertia vs K, and looks for a kink in the curve to hint at what K should be set to. The resulting elbow plot is shown below:
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/optimal_k.png" alt="Elbow plot for KMeans clustering. X axis is the K value, and the y axis is the sum of squared distances, or interia.">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/optimal_k.png" alt="Elbow plot for KMeans clustering. X axis is the K value, and the y axis is the sum of squared distances, or interia.">
 
 The above plot does not make it immediately clear where a kink occurs. A common trick in calculus is to look for the point at which the second derivative of a function is 0. This point is known as the inflection point. So, we will now plot the second derivative based off of the smoothing spline fitted above.
 
@@ -406,7 +406,7 @@ The above plot does not make it immediately clear where a kink occurs. A common 
 
 Which produces the following figure: 
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/second_derivative.png" alt="Plot of the second dervative vs K value">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/second_derivative.png" alt="Plot of the second dervative vs K value">
 
 The above plot shows the second derivative becoming zero first at $$K=5$$, which is the value we will choose for the KMeans algorithm. K Means will be implemented as follows: 
 
@@ -455,7 +455,7 @@ The clusters can be first visualized. To do this, we will need to only keep the 
 
 Which produces the following: 
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/3D_kmeans.png" alt="A 3D scatter plot of assigned clusters. Axes are the first three principle components">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/3D_kmeans.png" alt="A 3D scatter plot of assigned clusters. Axes are the first three principle components">
 
 The groups have been separated into low total UPDRS, mid range UPDRS, and high UPDRS. 
 
@@ -579,7 +579,7 @@ Where we have called Batch Normalization to normalize the activations of the pre
 
 One run of the NN produces a MSE of 
 
-<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinsons_photos/MSE_NN.png" alt="MSE from a run of the ANN">
+<img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/MSE_NN.png" alt="MSE from a run of the ANN">
 
 Because the NN is not a simple convex optimization problem (there is not necessarily a global minima), we should average the MSE over several runs. This give an average over 10 runs as $$\approx 2.4$$. This result is a $$68\%$$ increase over previously published results. 
 
