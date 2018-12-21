@@ -27,17 +27,28 @@ The data can be read in with a pandas csv read command. Columns in the data are 
 Column descriptions are as follows:
 
 -'subject#': the number assigned to a subject
+
 -'age': the age of the corresponding subject
+
 -'sex': the sex of the subject
+
 -'test_time': the integer number of days since the beginning of the study
+
 -'motor_UPDRS': the motor UPDRS score (subset of total UPDRS)
+
 -'total_UPDRS': the label to predict; describes the severity of the disease
+
 -'Jitter(%)', 'Jitter(Abs)', 'Jitter:RAP', 'Jitter:PPQ5', 'Jitter:DDP': measures of variation in fundamental vocal frequency
+
 -'Shimmer', 'Shimmer(dB)', 'Shimmer:APQ3', 'Shimmer:APQ5',
        'Shimmer:APQ11', 'Shimmer:DDA': measures of variation in fundamental vocal amplitude
+
 -'NHR', 'HNR': Noise to Harmonic Ratio and Harmonic to Noise Ratio
+
 -'RPDE': recurrence period density entropy; ability of vocal chords to maintain simple vibrations 
+
 -'DFA':  detrended ﬂuctuation analysis; extent of turbulent noise in vocal patterns
+
 -'PPE': pitch period entropy; evaluation of stable pitch control during sustained phonations
 
 The categories Jitter and Shimmer are, as one might imagine, highly correlated, and details on each subcategory of Jitter and Shimmer can be found at [5]. A preliminary glance at the categories would indicate that many will be correlated and a type of feature reduction technique will need to be employed. Before getting to this, data cleaning needs to be completed. As a first step, one can see that the column 'test_time' has several negative values which are likely typographical errors. This can be remedied using the following code:{% highlight python %} df['test_time'].abs(){% endhighlight %}. 
@@ -175,7 +186,7 @@ We can see that, as expected, the Jitter and Shimmer categories are highly corre
 <img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/corr_jitter.png" alt="Zoomed correlation matrix of the Jitter subcategories.">
 <img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/corr_shimmer.png" alt="Zoomed correlation matrix of the Shimmer subcategories.">
 
-It could be interesting to look at how time relates to total UPDRS score. In reference [3], it is stated that a more or less positive linear correlation exists between time and disease score. We can look at a bivariate distribution using Seaborn to see how the two feature dimensions $$'test_time'$$ and $$'total_UPDRS'$$ relate to each other. Darker areas in the plot indicate high correlation areas. 
+It could be interesting to look at how time relates to total UPDRS score. In reference [3], it is stated that a more or less positive linear correlation exists between time and disease score. We can look at a bivariate distribution using Seaborn to see how the two feature dimensions 'test_time' and 'total_UPDRS' relate to each other. Darker areas in the plot indicate high correlation areas. 
 
 {% highlight python %} 
     plt.figure(1)
@@ -184,7 +195,7 @@ It could be interesting to look at how time relates to total UPDRS score. In ref
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/marginal_plot.png" alt="Bivariate distribution of test time and total UPDRS score">
 
-From the above we can see that there is a lot of overlap between the two variables, and it might be worth digging further to see what kind of relationship exists. A relationship addressed here is that between gender and disease progression rate. Each of the 42 patients, both male and female, can have their respective $$'test_time'$$ vs $$'total_UPDRS'$$ plot created. Then, for each patient, we can look at a regression fit to their data. Because we will only be looking at data of dimension $$\R^2$$, we can take the coefficients of the fit and average them over each gender to get a disease progression rate for each sex. First, we will separate the men and women
+From the above we can see that there is a lot of overlap between the two variables, and it might be worth digging further to see what kind of relationship exists. A relationship addressed here is that between gender and disease progression rate. Each of the 42 patients, both male and female, can have their respective 'test_time' vs 'total_UPDRS' plot created. Then, for each patient, we can look at a regression fit to their data. Because we will only be looking at data of dimension $$R^2$$, we can take the coefficients of the fit and average them over each gender to get a disease progression rate for each sex. First, we will separate the men and women
 
 {% highlight python %} 
     #separate men from women
@@ -282,7 +293,7 @@ Now we have the MSE and fit coefficients stored in a dictionary for males and fe
           smallest_average[0])
 {% endhighlight %}
 
-The above code produces (only select few shown) the following plots:
+The above code produces (only select few shown) the following plots (Subject number appears at the top of the plot. The red line is an overlay of the regression fit):
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/subject_8_linfit.png" alt="Plot of the 'test_time' vs 'total_UPDRS' score for subject 8. Subject number appears at the top of the plot. Red line in overlay of the regression fit.">
 
@@ -294,9 +305,9 @@ There are several things to note from the above plots. First, in each plot there
 
 Secondly, and perhaps most interestingly, we see in subject 28 a decrease in UPDRS score as time progresses. This could indicate that the assumption of the appropriateness of linear interpolation could be overstated in the original study, or that the time period the data collection took place over needs to be longer in order to establish a more accurate long term trend where disease symptoms increase over time. Subjects were not on any medication during this study, so any increase or decrease in severity is due only to natural causes. 
 
-The average disease progression rates for men can be shown to be $$0.89$$, with units of $$total/UPDRS/day$$, compared to the female $$1.3$$, showing a $$43.5\%$$ slower progression in men compared to women. Reasons for this are best left to a medical professional to evaluate. 
+The average disease progression rates for men can be shown to be $$0.89$$, with units of total_UPDRS/day, compared to the female $$1.3$$, showing a $$43.5\%$$ slower progression in men compared to women. Reasons for this are best left to a medical professional to evaluate. 
 
-Lastly in our exploratory analysis, we will look at clustering to see what group attributes after using a Principle Component Analysis (PCA) reduction. We begin by first completing a PCA on the data. Starting with $$x_data$$ and $$y_data$$ as the features and labels, respectively:
+Lastly in our exploratory analysis, we will look at clustering to see what group attributes after using a Principle Component Analysis (PCA) reduction. We begin by first completing a PCA on the data. Starting with x_data and y_data as the features and labels, respectively:
 
 {% highlight python %} 
     x_train, x_test, y_train, y_test = train_test_split(preprocessing.scale(x_data), y_data, test_size=0.33, random_state=42)
@@ -362,7 +373,7 @@ As expected from the mathematical background of PCA, the first few principle com
 
 The above image clearly shows that the PCA has been effective in reducing the correlation values. There are still correlated components, but the numeric correlation values are much smaller than before. 
 
-Now we can move on to the KMeans clustering evaluation. A problem with determining the number of clusters to set K to is solved by first plotting the method $$km.interia_$$, which gives the average distance of points to their nearest cluster center. A value of zero would indicate that each point is its own cluster center. We will start to solve this by running a "for" loop over several different choices for K and plotting the K vs inertia. Additionally, a smoothing spline is plotted on top for reason to be discussed shortly. 
+Now we can move on to the KMeans clustering evaluation. A problem with determining the number of clusters to set K to is solved by first plotting the method km.interia_, which gives the average distance of points to their nearest cluster center. A value of zero would indicate that each point is its own cluster center. We will start to solve this by running a "for" loop over several different choices for K and plotting the K vs inertia. Additionally, a smoothing spline is plotted on top for reason to be discussed shortly. 
 
 {% highlight python %} 
     Sum_of_squared_distances = []
@@ -458,10 +469,14 @@ Which produces the following:
 
 The groups have been separated into low total UPDRS, mid range UPDRS, and high UPDRS. 
 
--Group 5 is the high UPDRS group, which consists mainly of men ($$70\%$$) and older aged people (average age 66). 
+-Group 5 is the high UPDRS group, which consists mainly of men ($$70\%$$) and older aged people (average age 66)
+
 -Group 4 is lower UPDRS, and mainly men who are slightly younger than group 5
+
 -Group 3 has a higher percentage of middle age females and is mid range UPDRS score
+
 -Group 2 has a higher percentage of older females and is also mid range UPDRS score
+
 -Group 1 is low UPDRS score, high percentage of men, and mid range age
 
 A KMeans analysis could be used to get a quick idea of where a patient should fall before going through a lengthy clinical evaluation. 
@@ -589,7 +604,11 @@ This project could be further refined by fine tuning the ANN. The ANN parameters
 
 # Bibliography 
 [1]  S. K. Van Den Eeden, C. M. Tanner, A. L. Bernstein, R. D. Fross, A. Leimpeter, D. A. Bloch, and L. M. Nelson, “Incidence of Parkinson’s disease: Variation by age, gender, and race/ethnicity,” Amer. J. Epidemiol., vol. 157, pp. 1015–1022, 2003. 
+
 [2]  A. Ho, R. Iansek, C. Marigliani, J. Bradshaw, and S. Gates, “Speech impairmentinalargesampleofpatientswithParkinson’sdisease,” Behav. Neurol., vol. 11, pp. 131–37, 1998.
+
 [3] A Tsanas, MA Little, PE McSharry, LO Ramig (2009) 'Accurate telemonitoring of Parkinson’s disease progression by non-invasive speech tests', IEEE Transactions on Biomedical Engineering
+
 [4]  M. W. M. Sch¨upbach, J.-C. Corvol, V. Czernecki, M. B. Djebara, J.-L. Golmard, Y. Agid, and A. Hartmann, “Segmental progression of early untreated Parkinson disease: A novel approach to clinical rating,” J. Neurol. Neurosurg. Psychiatry, vol. 81, no. 1, pp. 20–25, 2010.
+
 [5]  P.Boersma and D.Weenink.(2009). Praat: Doing Phonetics by Computer [Computer Program]. [Online]. Available: http://www.praat.org/ 
