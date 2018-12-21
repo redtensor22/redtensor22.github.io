@@ -8,7 +8,7 @@ excerpt: "Predicting Parkinson's Disease Progression with Machine Learning"
 mathjax: "true"
 ---
 
-# Project Objective
+## Project Objective
 
 Parkinson's disease is a devastating neurodegenerative disease that affects 20/100,000 people and occurrence frequency is expected to increase as the population ages [1]. The disease progressively removes the ability to move, speak, and think clearly. Vocal impairment affects approximately $$70-90\%$$ of Parkinson's patients [2] with hypophonia (degradation of voice volume) and dysphonia (breathiness or hoarseness). These factors are part of a score which predicts the stage of the disease a patient is in, known as the Total Unified Parkinson's Disease Rating Scale, or Total UPDRS, which ranges from 0-176, with 176 representing complete debilitation. This score is complemented by Motor UPDRS, which tracks a subset of the total score, including vocal hoarseness and movement abilities. 
 
@@ -19,7 +19,7 @@ In 2010, a group published a paper which took a large dataset generated from 42 
 Previously published results found that, using linear regression with Lasso technique to reduce feature set dimensions, total UPDRS scores could be predicted to within $$7.5$$ Mean Square Error (MSE). Here, I will show that implementing an artificial neural network decreases this MSE by up to $$70\%$$.  
 
 
-# Data Categories and Cleaning
+## Data Categories and Cleaning
 
 The data can be read in with a pandas csv read command. Columns in the data are shown below
 <img src="{{ site.url }}{{ site.baseurl }}/images/Parkinson_photos/df_columns.png" alt="Column titles for the dataframe">
@@ -149,7 +149,7 @@ for i in cols:
 
 which shows that there are no missing values. So at this point, the data is standardized, missing values taken care of, and outliers removed. Now we can move on to an exploratory analysis. 
 
-# Exploratory Data Analysis
+## Exploratory Data Analysis
 
 After getting an idea of what the data looks like and cleaning it, the next step is to look at how the features relate to one another. This will be done in several parts. The first part will be to look at how the feature dimensions relate to each other through the use of a correlation matrix. 
 
@@ -484,7 +484,7 @@ The groups have been separated into low total UPDRS, mid range UPDRS, and high U
 
 A KMeans analysis could be used to get a quick idea of where a patient should fall before going through a lengthy clinical evaluation. 
 
-# Predictive Analysis
+## Predictive Analysis
 
 The first move is to establish some sort of benchmark against which to measure performance. We will start by employing a simple Support Vector Regression algorithm. First, we will check the SVR without the PCA transformed data, and then again with the transformed data. 
 
